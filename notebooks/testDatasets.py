@@ -6,32 +6,26 @@ from torch.utils.data import DataLoader
 from datasets.ravdess import Ravdess
 from datasets.utils import collate_fn, melspectrogram, randomcrop, plot_spectrogram, powertodb
 
+from multiprocessing import Manager
+manager = Manager()
+shared_dict1 = manager.dict()
+shared_dict2 = manager.dict()
 
-data = Ravdess(
+dataset = Ravdess(
     "../ser_datasets/ravdess/train.csv",
     "../ser_datasets/ravdess/audios",
-    transform = [melspectrogram,powertodb,randomcrop]
-    )
-
-sr = data.get_sr()
-
-
-dataloader = DataLoader( data ,
-    batch_size=32 , shuffle=True,
+    shared_dict1,
+    shared_dict2,
+    transform = [randomcrop]
 )
 
-ys = []
-for x,y in dataloader:
-    # print( x[0].shape )   
-    # plt.imshow(x[0])
-    # break
-    ys += y.tolist()
 
-# print(ys)
+dataloader = DataLoader( dataset ,
+    batch_size=128 , shuffle=True,
+)
 
-from collections import Counter
-a = dict(Counter(ys))
-print(a)
+for i in range(150):
+    for x,y in dataloader:
+        print(x.shape)
+    print("i end",i)
 
-plt.hist(ys)
-plt.show()
