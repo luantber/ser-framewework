@@ -25,6 +25,9 @@ class Ravdess(Dataset):
         self.audio_cache = {}
         self.spec_cache = {}
 
+    def set_transform(self,transform):
+        self.transform = transform
+
     def __len__(self):
          return len(self.audio_labels)
 

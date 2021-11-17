@@ -20,8 +20,9 @@ int_train = int(0.7*len(dataset))
 
 train, test = random_split(dataset, [ int_train , len(dataset) - int_train ] ,  generator=torch.Generator().manual_seed(42) )
 
-train.transform = [randomcrop]
-test.transform = [centercrop]
+# print(train)
+train.dataset.set_transform([randomcrop])
+test.dataset.set_transform([centercrop])
 
 train_dataloader = DataLoader( train ,
     batch_size=128 , shuffle=True, num_workers = 3 , persistent_workers=True, 
@@ -30,6 +31,8 @@ train_dataloader = DataLoader( train ,
 test_dataloader = DataLoader( test ,
     batch_size=128 , shuffle=False, num_workers = 3 , persistent_workers=True, 
 )
+
+
 
 ## Training 
 wandb_logger = WandbLogger(project="ser", config= dict(

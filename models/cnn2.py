@@ -7,20 +7,19 @@ from pytorch_lightning.core.lightning import LightningModule
 from torch.optim import Adam
 import torchmetrics
 
-class CNN(LightningModule):
+class CNN2(LightningModule):
     def __init__(self, lr):
         super().__init__()
         self.lr = lr
 
         self.pool = nn.MaxPool2d(2, 2)
         
-        self.conv1 = nn.Conv2d(1, 32, 3)
-        self.conv2 = nn.Conv2d(32, 32, 3)
-        self.conv3 = nn.Conv2d(32, 32, 3)
+        self.conv1 = nn.Conv2d(1, 64, 3)
+        self.conv2 = nn.Conv2d(64, 64, 3)
+        self.conv3 = nn.Conv2d(64, 64, 3)
 
-
-        self.fc1 = nn.Linear(32 * 6 * 14, 120)
-        self.fc2 = nn.Linear(120, 84)
+        self.fc1 = nn.Linear(64 * 6 * 14, 1024)
+        self.fc2 = nn.Linear(1024, 84)
         self.fc3 = nn.Linear(84, 8)
 
         self.accuracy = torchmetrics.Accuracy()
