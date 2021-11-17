@@ -26,14 +26,15 @@ class Experiment( ):
                 net = self.models[0]()
 
                 train_dataloader = DataLoader( train ,
-                    batch_size=64 , shuffle=True, num_workers=5,pin_memory=True
+                    batch_size=128 , shuffle=True, num_workers=3 ,pin_memory=True, persistent_workers=True
                 )
 
                
                 
-                trainer = Trainer(gpus=1,logger=None,max_epochs=180,profiler="simple",enable_progress_bar=False)
+                trainer = Trainer(gpus=1,logger=None,max_epochs=180,profiler=None,enable_progress_bar=False)
                 trainer.fit(net,train_dataloader)
 
+                # break
 
                 
                 # print ( train , test )

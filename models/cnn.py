@@ -11,11 +11,14 @@ class CNN(LightningModule):
     def __init__(self):
         super().__init__()
 
-        self.conv1 = nn.Conv2d(1, 32, 3)
         self.pool = nn.MaxPool2d(2, 2)
-
+        
+        self.conv1 = nn.Conv2d(1, 32, 3)
         self.conv2 = nn.Conv2d(32, 32, 3)
-        self.fc1 = nn.Linear(32 * 14 * 30, 120)
+        self.conv3 = nn.Conv2d(32, 32, 3)
+
+
+        self.fc1 = nn.Linear(32 * 6 * 14, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 8)
 
@@ -29,6 +32,9 @@ class CNN(LightningModule):
 
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
+        # print("sahpe1",x.shape)
+        x = self.pool(F.relu(self.conv3(x)))
+
         # print("sahpe",x.shape)
         x = torch.flatten(x, 1) # flatten all dimensions except batch
         x = F.relu(self.fc1(x))

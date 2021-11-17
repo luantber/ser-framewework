@@ -7,7 +7,7 @@ from torchaudio.transforms import Spectrogram
 from datasets import utils
 
 class Ravdess(Dataset):
-    def __init__(self,annotations_file, audio_dir, shared_audios_cache ,  shared_spec_cache , transform=None ):
+    def __init__(self,annotations_file, audio_dir,  transform=None ):
         self.annotation_file = annotations_file
         self.audio_labels = pd.read_csv(self.annotation_file)
         self.audio_dir = audio_dir
@@ -15,12 +15,15 @@ class Ravdess(Dataset):
 
         # Cache Reasons Workers > 0 
 
-        if shared_audios_cache!=None and shared_spec_cache!=None:
-            self.audio_cache = shared_audios_cache
-            self.spec_cache = shared_spec_cache
-            self.using_cache = True
-        else:
-            self.using_cache = False
+        # if shared_audios_cache!=None and shared_spec_cache!=None:
+        #     self.audio_cache = shared_audios_cache
+        #     self.spec_cache = shared_spec_cache
+        #     self.using_cache = True
+        # else:
+        #     self.using_cache = False
+
+        self.audio_cache = {}
+        self.spec_cache = {}
 
     def __len__(self):
          return len(self.audio_labels)
