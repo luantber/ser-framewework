@@ -52,3 +52,5 @@ def run( model , config ):
     net = model(config["lr"])
     trainer = Trainer(gpus=1,logger=wandb_logger,max_epochs=config["epochs"],precision=16)
     trainer.fit(net,train_dataloader,test_dataloader)
+
+    wandb.finish()
