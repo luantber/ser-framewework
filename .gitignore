@@ -5,3 +5,4 @@ notebooks/ser/
 notebooks/checkpoints/
 ser_ravdess/
 wandb/
+lightning_logs/
