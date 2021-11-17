@@ -4,6 +4,7 @@ from pytorch_lightning.trainer import Trainer
 from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader
 import time 
+
 class Experiment( ):
     def __init__(self,models,dataset,k=4,n=10):
         self.models = models
