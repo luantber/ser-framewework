@@ -8,8 +8,9 @@ from torch.optim import Adam
 import torchmetrics
 
 class CNN(LightningModule):
-    def __init__(self):
+    def __init__(self, lr):
         super().__init__()
+        self.lr = lr
 
         self.pool = nn.MaxPool2d(2, 2)
         
@@ -23,6 +24,7 @@ class CNN(LightningModule):
         self.fc3 = nn.Linear(84, 8)
 
         self.accuracy = torchmetrics.Accuracy()
+        self.accuracy_val = torchmetrics.Accuracy()
         self.confusion = torchmetrics.ConfusionMatrix(num_classes=8)
 
     def forward(self, x):
@@ -52,9 +54,21 @@ class CNN(LightningModule):
 
         return loss
 
+    def validation_step(self, batch, batch_idx):
+        x, y = batch
+        logits = self(x)
+        loss = F.cross_entropy(logits, y)
+
+        self.accuracy_val(logits, y)
+
+        
+
     def training_epoch_end(self, outs):
         self.log('train_acc_epoch', self.accuracy)
+    
+    def validation_epoch_end(self, outs):
+        self.log('train_val_epoch', self.accuracy_val)
 
     def configure_optimizers(self):
-        return Adam(self.parameters(), lr=1e-3)
+        return Adam(self.parameters(), lr=(self.lr))
 

@@ -1,0 +1,7 @@
+1. Train / Test  3 models
+2. Run Ravdess Experiment
+
+3. Implement IEMOCAP dataset
+4. Kusisqa DATASET 
+
+
