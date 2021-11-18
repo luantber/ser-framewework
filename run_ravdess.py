@@ -16,7 +16,7 @@ modelB = (CNN2 , configB)
 
 ## CNN3 250
 configC = dict( lr=0.0005, epochs=250, batch_size=64, architecture="CNN3" )
-modelC = (CNN3 , configB)
+modelC = (CNN3 , configC)
 
 ravdess_exp = Experiment( 
     [ modelA , modelB, modelC ],
@@ -35,8 +35,8 @@ ravdess_exp = Experiment(
         [centercrop]
     ),
     k=4,
-    n=5,
-    name= "ravdess_5"
+    n=1,
+    name= "ravdess_f1acc_k4"
 )
 
 ravdess_exp.recolect()

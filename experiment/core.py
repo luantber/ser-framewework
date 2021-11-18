@@ -39,6 +39,7 @@ class Experiment:
 
         self.data = {
             "name": self.name,
+            "real_name": name,
             "k": self.k,
             "n": self.n,
             "iterations": []
