@@ -6,20 +6,20 @@ from models.cnn3 import CNN3
 from datasets.ravdess import Ravdess
 from datasets.utils import randomcrop, centercrop
 
-## CNN1
+## CNN1 300
 configA = dict( lr=0.0005,epochs=300, batch_size=64, architecture="CNN1" )
 modelA = ( CNN , configA )
 
-## CNN2
+## CNN2 250
 configB = dict( lr=0.0005, epochs=250, batch_size=64, architecture="CNN2" )
 modelB = (CNN2 , configB)
 
-## CNN3
+## CNN3 250
 configC = dict( lr=0.0005, epochs=250, batch_size=64, architecture="CNN3" )
-modelC = (CNN2 , configB)
+modelC = (CNN3 , configB)
 
 ravdess_exp = Experiment( 
-    [ modelA , modelB , modelC ],
+    [ modelA , modelB, modelC ],
 
     Ravdess,
 
@@ -35,7 +35,8 @@ ravdess_exp = Experiment(
         [centercrop]
     ),
     k=4,
-    n=1
+    n=5,
+    name= "ravdess_5"
 )
 
 ravdess_exp.recolect()

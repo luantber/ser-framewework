@@ -1,0 +1,96 @@
+{
+    "k": 2,
+    "n": 2,
+    "iterations": [
+        {
+            "time": 27.851157426834106,
+            "folds": [
+                [
+                    {
+                        "architecture": "CNN1",
+                        "metrics": {
+                            "test/acc": 0.2888889014720917
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.26249998807907104
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.20694445073604584
+                        }
+                    }
+                ],
+                [
+                    {
+                        "architecture": "CNN1",
+                        "metrics": {
+                            "test/acc": 0.27222222089767456
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.2597222328186035
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.18611110746860504
+                        }
+                    }
+                ]
+            ]
+        },
+        {
+            "time": 25.69407892227173,
+            "folds": [
+                [
+                    {
+                        "architecture": "CNN1",
+                        "metrics": {
+                            "test/acc": 0.29027777910232544
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.2430555522441864
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.26249998807907104
+                        }
+                    }
+                ],
+                [
+                    {
+                        "architecture": "CNN1",
+                        "metrics": {
+                            "test/acc": 0.3083333373069763
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.24166665971279144
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.28333333134651184
+                        }
+                    }
+                ]
+            ]
+        }
+    ]
+}

@@ -25,6 +25,7 @@ class CNN(LightningModule):
 
         self.accuracy = torchmetrics.Accuracy()
         self.accuracy_val = torchmetrics.Accuracy()
+        self.accuracy_test = torchmetrics.Accuracy()
         
         self.confusion = torchmetrics.ConfusionMatrix(num_classes=8)
 
@@ -67,7 +68,16 @@ class CNN(LightningModule):
         self.log('train/acc', self.accuracy)
     
     def validation_epoch_end(self, outs):
-        self.log('val/acc', self.accuracy_val)
+        self.log('val/acc', self.accuracy_val)      
+
+    def test_step(self,batch,idx):
+        x, y = batch
+        logits = self(x)
+        self.accuracy_test(logits, y)
+    
+    def test_epoch_end(self,out):
+        self.log("test/acc",self.accuracy_test)
+
 
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=(self.lr))
