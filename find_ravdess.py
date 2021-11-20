@@ -9,6 +9,7 @@ from models.cnn3 import CNN3
 
 config = dict( 
             lr=0.0005,
+            out=8,
             epochs=300,
             batch_size=64,
             architecture="CNN1"
@@ -19,6 +20,7 @@ ravdess_task.run( CNN , config )
 
 config = dict( 
             lr=0.0005,
+            out=8,
             epochs=250,
             batch_size=64,
             architecture="CNN2"
@@ -30,6 +32,7 @@ ravdess_task.run( CNN2 , config )
 
 config = dict( 
             lr=0.0005,
+            out=8,
             epochs=250,
             batch_size=64,
             architecture="CNN3"

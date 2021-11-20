@@ -7,15 +7,15 @@ from datasets.ravdess import Ravdess
 from datasets.utils import randomcrop, centercrop
 
 ## CNN1 300
-configA = dict( lr=0.0005,epochs=300, batch_size=64, architecture="CNN1" )
+configA = dict( lr=0.0005,out=8,epochs=300, batch_size=64, architecture="CNN1" )
 modelA = ( CNN , configA )
 
 ## CNN2 250
-configB = dict( lr=0.0005, epochs=250, batch_size=64, architecture="CNN2" )
+configB = dict( lr=0.0005,out=8, epochs=250, batch_size=64, architecture="CNN2" )
 modelB = (CNN2 , configB)
 
 ## CNN3 250
-configC = dict( lr=0.0005, epochs=250, batch_size=64, architecture="CNN3" )
+configC = dict( lr=0.0005,out=8, epochs=250, batch_size=64, architecture="CNN3" )
 modelC = (CNN3 , configC)
 
 ravdess_exp = Experiment( 
@@ -35,7 +35,7 @@ ravdess_exp = Experiment(
         [centercrop]
     ),
     k=4,
-    n=1,
+    n=2,
     name= "ravdess_f1acc_k4"
 )
 

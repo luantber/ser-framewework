@@ -72,7 +72,7 @@ class Experiment:
                         batch_size=config["batch_size"] , shuffle=False, num_workers=3 , persistent_workers=True,
                     )
 
-                    net = model_class(config["lr"])
+                    net = model_class(config["lr"],config["out"])
                     
                     trainer = Trainer(gpus=1,max_epochs=config["epochs"],precision=16,enable_progress_bar=False)
                     trainer.fit(net,train_dataloader)

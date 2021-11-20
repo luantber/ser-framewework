@@ -8,7 +8,7 @@ from torch.optim import Adam
 import torchmetrics
 
 class CNN3(LightningModule):
-    def __init__(self, lr):
+    def __init__(self, lr, out):
         super().__init__()
         self.lr = lr
 
@@ -20,7 +20,7 @@ class CNN3(LightningModule):
         self.conv4 = nn.Conv2d(64, 64, 3)
 
         self.fc1 = nn.Linear(64 * 2 * 6, 1024)
-        self.fc3 = nn.Linear(1024, 8)
+        self.fc3 = nn.Linear(1024, out)
 
         self.accuracy = torchmetrics.Accuracy()
         self.accuracy_val = torchmetrics.Accuracy()

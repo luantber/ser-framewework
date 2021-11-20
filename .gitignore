@@ -4,5 +4,6 @@ notebooks/wandb/
 notebooks/ser/
 notebooks/checkpoints/
 ser_ravdess/
+ser_iemocap/
 wandb/
 lightning_logs/

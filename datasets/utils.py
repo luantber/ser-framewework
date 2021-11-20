@@ -1,10 +1,10 @@
 import torch
 from torchaudio import transforms
 from torchaudio.transforms import MelSpectrogram
-from torchvision.transforms import RandomCrop, CenterCrop
+from torchvision.transforms import RandomCrop, CenterCrop, Pad
 import matplotlib.pyplot as plt
 import librosa
-from torchvision.transforms.transforms import CenterCrop 
+
 
 """"
   Transformations
@@ -19,11 +19,19 @@ def powertodb(spec,sr):
   return torch.tensor(librosa.power_to_db(spec))
 
 def centercrop(spec,sr):
+  if spec.shape[1] < 128: 
+    pad = int ( ( 130 - spec.shape[1]  )/2 ) 
+    p = Pad( [pad, 0 , pad, 0 ] , padding_mode ="edge" )
+    spec = p(spec)
+
+
   r = CenterCrop((64,128))
+
   return r(spec)
   
 def randomcrop(spec,sr):
-  r = RandomCrop((64,128))
+  
+  r = RandomCrop((64,128),pad_if_needed=True,padding_mode="edge")
   return r(spec)
 
 def d_melspectrogram(wave,label):

@@ -1,0 +1,59 @@
+{
+    "name": "test_small_f1acc_1637205632",
+    "real_name": "test_small_f1acc",
+    "k": 2,
+    "n": 1,
+    "iterations": [
+        {
+            "time": 28.914801836013794,
+            "folds": [
+                [
+                    {
+                        "architecture": "CNN1",
+                        "metrics": {
+                            "test/acc": 0.2847222089767456,
+                            "test/f1": 0.2847222089767456
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.20000000298023224,
+                            "test/f1": 0.20000001788139343
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.27638888359069824,
+                            "test/f1": 0.27638888359069824
+                        }
+                    }
+                ],
+                [
+                    {
+                        "architecture": "CNN1",
+                        "metrics": {
+                            "test/acc": 0.30694442987442017,
+                            "test/f1": 0.30694442987442017
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.2361111044883728,
+                            "test/f1": 0.2361111044883728
+                        }
+                    },
+                    {
+                        "architecture": "CNN2",
+                        "metrics": {
+                            "test/acc": 0.2430555522441864,
+                            "test/f1": 0.2430555522441864
+                        }
+                    }
+                ]
+            ]
+        }
+    ]
+}

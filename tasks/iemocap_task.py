@@ -1,6 +1,6 @@
 import torch
 from torch.utils.data.dataset import Subset
-from datasets.ravdess import Ravdess
+from datasets.iemocap import Iemocap
 from datasets.utils import randomcrop, centercrop
 from models.cnn import CNN
 from torch.utils.data import DataLoader, random_split
@@ -13,15 +13,15 @@ import numpy as np
 
 def run( model , config ):
 
-    dataset_train = Ravdess(
-        "ser_datasets/ravdess/train.csv",
-        "ser_datasets/ravdess/audios",
+    dataset_train = Iemocap(
+        "ser_datasets/iemocap/train.csv",
+        "ser_datasets/iemocap/audios",
         transform=[randomcrop]
     )
 
-    dataset_test = Ravdess(
-        "ser_datasets/ravdess/train.csv",
-        "ser_datasets/ravdess/audios",
+    dataset_test = Iemocap(
+        "ser_datasets/iemocap/train.csv",
+        "ser_datasets/iemocap/audios",
         transform=[centercrop]
     )
 
@@ -47,7 +47,7 @@ def run( model , config ):
 
     
     ## Training 
-    wandb_logger = WandbLogger(project="ser_ravdess", config=config )
+    wandb_logger = WandbLogger(project="ser_iemocap", config=config )
 
     net = model(config["lr"],config["out"])
     trainer = Trainer(gpus=1,logger=wandb_logger,max_epochs=config["epochs"],precision=16)
