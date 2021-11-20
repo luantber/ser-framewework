@@ -20,7 +20,7 @@ def get_results(filename):
         matrix = np.array( matrix )
         print(matrix)
 
-        x = matrix[:,0].tolist()
+        x = matrix[:,1].tolist()
         y = matrix[:,2].tolist()
         w, p = wilcoxon(x,y,alternative="two-sided")
 
