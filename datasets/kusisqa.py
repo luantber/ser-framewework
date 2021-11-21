@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 from torchaudio.transforms import Spectrogram
 from datasets import utils
 
-class KusisqaDim(Dataset):
+class Kusisqa(Dataset):
 
     def __init__(self,annotations_file, audio_dir,  transform=None ):
         self.annotation_file = annotations_file
@@ -18,7 +18,7 @@ class KusisqaDim(Dataset):
         self.spec_cache = {}
 
         # Number of Classes
-        self.number_classes = 3
+        self.number_classes = 8
         
 
     def set_transform(self,transform):
@@ -48,14 +48,11 @@ class KusisqaDim(Dataset):
                 self.spec_cache[audio_path] = wave
 
 
-        label1 = self.audio_labels.iloc[idx, 1]
-        label2 = self.audio_labels.iloc[idx, 2]
-        label3 = self.audio_labels.iloc[idx, 3]
-
+        label = self.audio_labels.iloc[idx, 1]
 
         if self.transform:
             for t in self.transform:
                 wave = t(wave,sr)
 
-        return wave, torch.tensor([label1,label2,label3])
+        return wave, label
 
