@@ -25,11 +25,24 @@ class CNNDim(LightningModule):
         self.fc1 = nn.Linear(32 * 1 * 5, 128)
         self.fc3 = nn.Linear(128, 3)
 
-        self.accuracy = torchmetrics.MeanAbsolutePercentageError()
-        self.accuracy_val = torchmetrics.MeanAbsolutePercentageError()
+
+        self.accuracy = torchmetrics.MeanAbsoluteError()
+        self.accuracy_val = torchmetrics.MeanAbsoluteError()
+
+
+        self.d1 = torchmetrics.MeanAbsoluteError()
+        self.d2 = torchmetrics.MeanAbsoluteError()
+        self.d3 = torchmetrics.MeanAbsoluteError()
+
+        self.d1_val = torchmetrics.MeanAbsoluteError()
+        self.d2_val = torchmetrics.MeanAbsoluteError()
+        self.d3_val = torchmetrics.MeanAbsoluteError()
+
+
+
 
         ## Results
-        self.accuracy_test = torchmetrics.MeanAbsolutePercentageError()
+        self.accuracy_test = torchmetrics.MeanAbsoluteError()
 
 
     def forward(self, x):
@@ -59,40 +72,58 @@ class CNNDim(LightningModule):
         loss = F.mse_loss(logits, y)
 
         self.accuracy(logits, y)
-        self.log('train/acc_step', self.accuracy, prog_bar=True)
+
+        
+        self.d1(logits[:,0], y[:,0])
+        self.d2(logits[:,1], y[:,1])
+        self.d3(logits[:,2], y[:,2])
+
         self.log('train/loss', loss , prog_bar=True)
-
-
         return loss
 
+    def training_epoch_end(self, outs):
+        self.log('train/acc', self.accuracy)
+        self.log('train/d1', self.d1)
+        self.log('train/d2', self.d2)
+        self.log('train/d3', self.d3)
+        
     def validation_step(self, batch, batch_idx):
         x, y = batch
         logits = self(x)
         loss = F.mse_loss(logits, y)
 
-        self.log('val/loss', loss , prog_bar=True)
+
 
         self.accuracy_val(logits, y)
+        self.d1_val(logits[:,0], y[:,0])
+        self.d2_val(logits[:,1], y[:,1])
+        self.d3_val(logits[:,2], y[:,2])
+
+        self.log('val/loss', loss , prog_bar=True)
 
 
-    def test_step(self,batch,idx):
-        x, y = batch
-        logits = self(x)
-        self.accuracy_test(logits, y)
-        self.f1_test(logits, y)
-    
-    def test_epoch_end(self,out):
-        self.log("test/acc",self.accuracy_test)
-        self.log("test/f1",self.f1_test)
-        
 
-    
-    def training_epoch_end(self, outs):
-        self.log('train/acc', self.accuracy)
+
     
     def validation_epoch_end(self, outs):
         self.log('val/acc', self.accuracy_val)
+        self.log('val/d1', self.d1_val)
+        self.log('val/d2', self.d2_val)
+        self.log('val/d3', self.d3_val)
         
+
+    # def test_step(self,batch,idx):
+    #     x, y = batch
+    #     logits = self(x)
+    #     self.accuracy_test(logits, y)
+
+    
+    # def test_epoch_end(self,out):
+    #     self.log("test/acc",self.accuracy_test)
+    #     self.log("test/f1",self.f1_test)
+        
+
+    
 
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=(self.lr))

@@ -16,7 +16,7 @@ train_dataloader = DataLoader( dataset_train ,
 
 import matplotlib.pyplot as plt
 for x,y in train_dataloader:
-    print(x.shape, y.shape )
+    print(x.shape, y.dtype )
     print( x[0].shape , y[0])
     plt.imshow(x[0])
     plt.show()

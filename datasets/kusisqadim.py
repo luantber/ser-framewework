@@ -52,10 +52,12 @@ class KusisqaDim(Dataset):
         label2 = self.audio_labels.iloc[idx, 2]
         label3 = self.audio_labels.iloc[idx, 3]
 
+        labels = torch.tensor([label1,label2,label3],dtype=torch.float32)
+
 
         if self.transform:
             for t in self.transform:
                 wave = t(wave,sr)
 
-        return wave, torch.tensor([label1,label2,label3])
+        return wave, labels
 
