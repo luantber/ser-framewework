@@ -13,5 +13,3 @@ fig, ax = plt.subplots()
 ax.hist(ps,bins=bins)
 ax.set_xticks(bins)
 plt.show()
-
-

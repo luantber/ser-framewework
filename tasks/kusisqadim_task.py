@@ -1,8 +1,6 @@
 from datasets.kusisqadim import KusisqaDim
 from datasets.utils import randomcrop, centercrop
 
-from models.cnn import CNN
-
 from torch.utils.data.dataset import Subset
 from torch.utils.data import DataLoader
 
@@ -14,7 +12,6 @@ import wandb
 import numpy as np
 
 def run( model , config ):
-
     dataset_train = KusisqaDim(
         "ser_datasets/kusisqadim/train.csv",
         "ser_datasets/kusisqadim/audios",
@@ -46,7 +43,6 @@ def run( model , config ):
     test_dataloader = DataLoader( test_subset ,
         batch_size=config["batch_size"] , shuffle=False, num_workers = 3 , persistent_workers=True, 
     )
-
     
     ## Training 
     wandb_logger = WandbLogger(project="ser_kusisqaDim", config=config , save_dir="logs")
