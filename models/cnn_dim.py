@@ -4,7 +4,7 @@ from torch import nn
 from torch.optim import Adam
 import torchmetrics
 
-from backbone.cnn import CNN
+from models.backbone.cnn import CNN
 from pytorch_lightning.core.lightning import LightningModule
 
 
@@ -24,7 +24,7 @@ class CNNDim(LightningModule):
         if loss == "mse":
             self.loss = F.mse_loss
         elif loss == "ccc":
-            self.loss = 0
+            raise NotImplementedError("CCC Loss not implemented yet")
         else:
             raise ValueError("Loss not supported")
 

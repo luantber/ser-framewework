@@ -7,3 +7,4 @@ ser_ravdess/
 ser_iemocap/
 wandb/
 lightning_logs/
+checkpoints/**

@@ -4,6 +4,7 @@ from datasets.utils import randomcrop, centercrop
 from torch.utils.data.dataset import Subset
 from torch.utils.data import DataLoader
 
+
 from pytorch_lightning.trainer import Trainer
 from pytorch_lightning.loggers import WandbLogger
 
@@ -50,12 +51,21 @@ def run(model, config):
     )
 
     ## Training
-    wandb_logger = WandbLogger(project="kusisqa_ccc", config=config, save_dir="logs")
+    wandb_logger = WandbLogger(project="ser_kusisqaDim", config=config, save_dir="logs")
 
-    net = model(config["lr"])
+    net = model(config["lr"], config["out"])
     trainer = Trainer(
         gpus=1, logger=wandb_logger, max_epochs=config["epochs"], precision=16
     )
     trainer.fit(net, train_dataloader, test_dataloader)
 
     wandb.finish()
+
+
+def get_number_classes():
+    dataset = KusisqaDim(
+        "ser_datasets/iemocap/train.csv",
+        "ser_datasets/iemocap/audios",
+        transform=[randomcrop],
+    )
+    return dataset.number_classes
