@@ -3,6 +3,7 @@ from torch.nn import functional as F
 from torch import nn
 from torch.optim import Adam
 import torchmetrics
+from models.metrics import MSE, CCC, mse_loss_custom, ccc_loss_custom
 
 from models.backbone.cnn import CNN
 from pytorch_lightning.core.lightning import LightningModule
@@ -22,27 +23,19 @@ class CNNDim(LightningModule):
 
         # Configure Loss and Metric of Precision
         if loss == "mse":
-            self.loss = F.mse_loss
+            # self.loss = F.mse_loss
+            self.loss = mse_loss_custom
         elif loss == "ccc":
-            raise NotImplementedError("CCC Loss not implemented yet")
+            self.loss = ccc_loss_custom
         else:
             raise ValueError("Loss not supported")
 
-        self.metric_mse = torchmetrics.MeanAbsoluteError
-        self.metric_ccc = torchmetrics.MeanAbsoluteError
-              
-
         # BoilerpLate Dimensions
-        self.accuracy = self.metric()
-        self.accuracy_val = self.metric()
+        self.mse_train = MSE()
+        self.mse_val = MSE()
 
-        self.d1 = self.metric()
-        self.d2 = self.metric()
-        self.d3 = self.metric()
-
-        self.d1_val = self.metric()
-        self.d2_val = self.metric()
-        self.d3_val = self.metric()
+        self.ccc_train = CCC()
+        self.ccc_val = CCC()
 
     def forward(self, x):
         x = self.cnn(x)
@@ -54,38 +47,30 @@ class CNNDim(LightningModule):
         logits = self(x)
         loss = self.loss(logits, y)
 
-        self.accuracy(logits, y)
+        self.mse_train(logits, y)
+        self.ccc_train(logits, y)
 
-        self.d1(logits[:, 0], y[:, 0])
-        self.d2(logits[:, 1], y[:, 1])
-        self.d3(logits[:, 2], y[:, 2])
-
-        self.log("train/loss", loss, prog_bar=True)
+        self.log("train/loss", loss, on_step=True, on_epoch=True, prog_bar=True)
         return loss
 
     def training_epoch_end(self, outs):
-        self.log("train/acc", self.accuracy)
-        self.log("train/d1", self.d1)
-        self.log("train/d2", self.d2)
-        self.log("train/d3", self.d3)
+
+        self.log("train/mse", self.mse_train)
+        self.log("train/ccc", self.ccc_train)
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
         logits = self(x)
         loss = self.loss(logits, y)
 
-        self.accuracy_val(logits, y)
-        self.d1_val(logits[:, 0], y[:, 0])
-        self.d2_val(logits[:, 1], y[:, 1])
-        self.d3_val(logits[:, 2], y[:, 2])
+        self.mse_val(logits, y)
+        self.ccc_val(logits, y)
 
         self.log("val/loss", loss, prog_bar=True)
 
     def validation_epoch_end(self, outs):
-        self.log("val/acc", self.accuracy_val)
-        self.log("val/d1", self.d1_val)
-        self.log("val/d2", self.d2_val)
-        self.log("val/d3", self.d3_val)
+        self.log("val/mse", self.mse_val)
+        self.log("val/ccc", self.ccc_val)
 
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=(self.lr))
