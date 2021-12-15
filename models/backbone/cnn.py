@@ -15,8 +15,8 @@ class CNN(LightningModule):
 
         self.dropout = nn.Dropout(0.25)
 
-        # self.fc1 = nn.LazyLinear(128)
-        self.fc1 = nn.Linear(32 * 6 * 14, 120)
+        self.fc1 = nn.LazyLinear(128)
+        # self.fc1 = nn.Linear(32 * 6 * 14, 120)
 
     def forward(self, x):
         batch_size, height, width = x.size()

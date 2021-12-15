@@ -28,7 +28,9 @@ class CNNDim(LightningModule):
         else:
             raise ValueError("Loss not supported")
 
-        self.metric = torchmetrics.MeanAbsoluteError
+        self.metric_mse = torchmetrics.MeanAbsoluteError
+        self.metric_ccc = torchmetrics.MeanAbsoluteError
+              
 
         # BoilerpLate Dimensions
         self.accuracy = self.metric()
