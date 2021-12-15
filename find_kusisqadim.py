@@ -1,8 +1,5 @@
 from tasks import kusisqadim_task
-
 from models.dim.cnn import CNNDim
-
-
 
 config = dict( 
             lr=0.002,

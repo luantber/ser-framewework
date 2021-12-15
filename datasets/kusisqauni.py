@@ -8,16 +8,27 @@ from datasets import utils
 
 
 class KusisqaUni(Dataset):
-    def __init__(self, annotations_file, audio_dir, dimension, transform=None):
+    def __init__(
+        self, annotations_file, audio_dir, dimension1, dimension2=None, transform=None
+    ):
+
         self.annotation_file = annotations_file
         self.audio_labels = pd.read_csv(self.annotation_file)
+
         self.audio_labels = self.audio_labels[
-            self.audio_labels[self.audio_labels.columns[dimension]] != 3
+            self.audio_labels[self.audio_labels.columns[dimension1]] != 3
         ]
+
+        if dimension2:
+            self.audio_labels = self.audio_labels[
+                self.audio_labels[self.audio_labels.columns[dimension2]] != 3
+            ]
 
         self.audio_dir = audio_dir
         self.transform = transform
-        self.dimension = dimension
+
+        # GET DIMENSION1 
+        self.dimension = dimension1
 
         # Cache Preload
         self.spec_cache = {}
