@@ -1,4 +1,3 @@
 ## Kusisqa
-- Kusisqa ( Never used )
-- Kusisqauni ( Kusisqa Unidimensional )
-- Kusisqadim (  )
+
+- Kusisqadim:  return tensor ( 3 dimensiones )

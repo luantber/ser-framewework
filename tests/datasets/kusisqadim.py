@@ -1,13 +1,13 @@
-from datasets.kusisqauni import KusisqaUni
+from datasets import KusisqaDim
 from datasets.utils import randomcrop, centercrop
 from torch.utils.data import DataLoader
 
-dataset_train = KusisqaUni(
+dataset_train = KusisqaDim(
     "ser_datasets/kusisqadim/train.csv",
     "ser_datasets/kusisqadim/audios",
-    dimension=1,
     transform=[centercrop],
 )
+
 
 train_dataloader = DataLoader(
     dataset_train,
@@ -17,12 +17,12 @@ train_dataloader = DataLoader(
     persistent_workers=True,
 )
 
+
 import matplotlib.pyplot as plt
 
 for x, y in train_dataloader:
-    print(x.shape, y.shape)
+    print(x.shape, y.dtype)
     print(x[0].shape, y[0])
-    print(y)
-    # plt.imshow(x[0])
-    # plt.show()
+    plt.imshow(x[0])
+    plt.show()
     break
