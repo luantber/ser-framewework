@@ -47,7 +47,7 @@ class CCC(Metric):
 
     def update(self, preds: torch.Tensor, target: torch.Tensor):
         assert preds.shape == target.shape
-        self.correct += ccc_loss_custom(preds, target)
+        self.correct += 1 - ccc_loss_custom(preds, target)
         self.total += 1
 
     def compute(self):

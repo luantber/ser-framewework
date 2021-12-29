@@ -17,13 +17,13 @@ if __name__ == "__main__":
 
 
     # MSE
-    config = dict(
-        lr=0.001, epochs=128, batch_size=64, loss="mse", architecture="CNNDim"
-    )
-    kusisqaDimTask.run(CNNDim, config)
+    # config = dict(
+    #     lr=0.001, epochs=128, batch_size=64, loss="mse", architecture="CNNDim"
+    # )
+    # kusisqaDimTask.run(CNNDim, config)
 
     # CCC
     config = dict(
-        lr=0.001, epochs=128, batch_size=64, loss="ccc", architecture="CNNDim"
+        lr=0.001, epochs=64, batch_size=64, loss="ccc", architecture="CNNDim"
     )
     kusisqaDimTask.run(CNNDim, config)

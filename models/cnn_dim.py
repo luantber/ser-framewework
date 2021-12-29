@@ -8,7 +8,6 @@ from models.metrics import MSE, CCC, mse_loss_custom, ccc_loss_custom
 from models.backbone.cnn import CNN
 from pytorch_lightning.core.lightning import LightningModule
 
-
 class CNNDim(LightningModule):
     def __init__(self, lr, loss="mse"):
         super().__init__()
