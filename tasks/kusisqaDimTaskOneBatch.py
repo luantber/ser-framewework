@@ -1,3 +1,4 @@
+from pandas.core import indexing
 from datasets import KusisqaDim
 from datasets.utils import randomcrop, centercrop
 
@@ -16,7 +17,7 @@ def run(model, config):
     dataset_train = KusisqaDim(
         "ser_datasets/kusisqadim/train.csv",
         "ser_datasets/kusisqadim/audios",
-        transform=[randomcrop],
+        transform=[centercrop],
     )
 
     dataset_test = KusisqaDim(
@@ -25,7 +26,8 @@ def run(model, config):
         transform=[centercrop],
     )
 
-    indexes = np.arange(len(dataset_train))
+    # indexes = np.arange(len(dataset_train))
+    indexes = np.arange(100)
     np.random.shuffle(indexes)
     split = int(len(indexes) * 0.8)
     train, test = indexes[:split], indexes[split:]
@@ -51,7 +53,9 @@ def run(model, config):
     )
 
     ## Training
-    wandb_logger = WandbLogger(project="kusisqa_ccc_2", config=config, save_dir="logs")
+    wandb_logger = WandbLogger(
+        project="kusisqa_ccc_one", config=config, save_dir="logs"
+    )
 
     net = model(config["lr"], config["loss"])
     trainer = Trainer(

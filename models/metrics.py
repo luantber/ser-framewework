@@ -1,4 +1,4 @@
-from torchmetrics import Metric
+from torchmetrics import Metric, metric
 from torchmetrics.functional import mean_squared_error
 import torch
 
@@ -45,9 +45,9 @@ class CCC(Metric):
         self.add_state("correct", default=torch.tensor(0.0), dist_reduce_fx="sum")
         self.add_state("total", default=torch.tensor(0.0), dist_reduce_fx="sum")
 
-    def update(self, preds: torch.Tensor, target: torch.Tensor):
-        assert preds.shape == target.shape
-        self.correct += 1 - ccc_loss_custom(preds, target)
+    def update(self, metric_ccc):
+
+        self.correct += metric_ccc
         self.total += 1
 
     def compute(self):

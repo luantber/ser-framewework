@@ -1,3 +1,5 @@
+# resnet18 = models.resnet18(pretrained=True)
+import torchvision.models as models
 import torch
 from torch.nn import functional as F
 from torch import nn
@@ -9,7 +11,7 @@ from models.backbone.cnn import CNN
 from pytorch_lightning.core.lightning import LightningModule
 
 
-class CNNDim(LightningModule):
+class Resnet(LightningModule):
     def __init__(self, lr, loss="mse"):
         super().__init__()
 
@@ -18,8 +20,13 @@ class CNNDim(LightningModule):
         self.n_dimensions = 3
 
         # Configure Network Architecture
-        self.cnn = CNN()
-        self.fc = nn.Linear(128, self.n_dimensions)
+        self.cnn = models.resnet18(pretrained=True)
+        for param in self.cnn.parameters():
+            param.requires_grad = False
+
+        self.cnn.fc = nn.Sequential(
+            nn.LazyLinear(256), nn.ReLU(), nn.LazyLinear(self.n_dimensions)
+        )
 
         # Configure Loss and Metric of Precision
         if loss == "mse":
@@ -43,9 +50,12 @@ class CNNDim(LightningModule):
         self.ccc_val_d = CCC()
 
     def forward(self, x):
+        batch_size, height, width = x.size()
+        x = x.view(batch_size, 1, height, width)
+        x = torch.cat((x, x, x), 1)
+
         x = self.cnn(x)
-        
-        x = self.fc(x)
+
         return x
 
     def training_step(self, batch, batch_idx):
@@ -95,7 +105,7 @@ class CNNDim(LightningModule):
         self.log("val/loss", loss, prog_bar=True)
 
     def validation_epoch_end(self, outs):
-       
+
         self.log("val/ccc_v", self.ccc_val_v)
         self.log("val/ccc_a", self.ccc_val_a)
         self.log("val/ccc_d", self.ccc_val_d)
