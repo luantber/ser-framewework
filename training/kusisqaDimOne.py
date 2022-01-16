@@ -1,3 +1,7 @@
+"""
+  Only for overfitting reasons
+"""
+
 from tasks import kusisqaDimTaskOneBatch
 from models.cnn_dim import CNNDim
 from models.resnet import Resnet

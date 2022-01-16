@@ -51,11 +51,13 @@ def run(model, config):
     )
 
     ## Training
-    wandb_logger = WandbLogger(project="kusisqa_ccc_2", config=config, save_dir="logs")
+    wandb_logger = WandbLogger(
+        project="kusisqa_ccc_final", config=config, save_dir="logs"
+    )
 
     net = model(config["lr"], config["loss"])
     trainer = Trainer(
-        gpus=1, logger=wandb_logger, max_epochs=config["epochs"], precision=16
+        gpus=1, logger=wandb_logger, max_epochs=config["epochs"], precision=32
     )
     trainer.fit(net, train_dataloader, test_dataloader)
 

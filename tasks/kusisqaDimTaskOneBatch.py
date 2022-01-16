@@ -1,3 +1,6 @@
+"""
+Only for overfitting reasons
+"""
 from pandas.core import indexing
 from datasets import KusisqaDim
 from datasets.utils import randomcrop, centercrop
@@ -54,12 +57,12 @@ def run(model, config):
 
     ## Training
     wandb_logger = WandbLogger(
-        project="kusisqa_ccc_one", config=config, save_dir="logs"
+        project="kusisqa_final", config=config, save_dir="logs"
     )
 
     net = model(config["lr"], config["loss"])
     trainer = Trainer(
-        gpus=1, logger=wandb_logger, max_epochs=config["epochs"], precision=16
+        gpus=1, logger=wandb_logger, max_epochs=config["epochs"], precision=32
     )
     trainer.fit(net, train_dataloader, test_dataloader)
 
